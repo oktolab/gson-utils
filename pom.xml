@@ -1,0 +1,48 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>br.com.oktolab.gson</groupId>
+	<artifactId>gson-utils</artifactId>
+	<version>0.0.4</version>
+
+	<repositories>
+		<repository>
+			<id>maven-s3-okto-release</id>
+			<url>s3://m2-repository-okto/releases</url>
+		</repository>
+		<repository>
+			<id>maven-s3-okto-snapshot</id>
+			<url>s3://m2-repository-okto/snapshots</url>
+		</repository>
+	</repositories>
+
+	<distributionManagement>
+		<repository>
+			<id>maven-s3-okto-release</id>
+			<name>AWS Release Repository</name>
+			<url>s3://m2-repository-okto/releases</url>
+		</repository>
+		<snapshotRepository>
+			<id>maven-s3-okto-snapshot</id>
+			<name>AWS Snapshot Repository</name>
+			<url>s3://m2-repository-okto/snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>
+
+	<build>
+		<extensions>
+			<extension>
+				<groupId>org.springframework.build</groupId>
+				<artifactId>aws-maven</artifactId>
+				<version>5.0.0.RELEASE</version>
+			</extension>
+		</extensions>
+	</build>
+	<dependencies>
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.6.2</version>
+		</dependency>
+	</dependencies>
+</project>
