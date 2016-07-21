@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>br.com.oktolab.gson</groupId>
 	<artifactId>gson-utils</artifactId>
-	<version>0.0.4</version>
+	<version>0.0.5</version>
 
 	<repositories>
 		<repository>
@@ -44,5 +44,12 @@
 			<artifactId>gson</artifactId>
 			<version>2.6.2</version>
 		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+			<scope>test</scope>
+		</dependency>
+
 	</dependencies>
 </project>
