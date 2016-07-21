@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.Date;
+import java.util.List;
 
 import br.com.oktolab.gson.adapter.GsonDateTypeAdapter;
 import br.com.oktolab.gson.adapter.GsonLocalDateTimeTypeAdapter;
@@ -12,6 +13,8 @@ import br.com.oktolab.gson.adapter.GsonZonedDateTimeTypeAdapter;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 
 public class GSON {
 
@@ -34,5 +37,18 @@ public class GSON {
 			}
 		}
 		return gson;
+	}
+
+	public static boolean isValidJson(String content) {
+		try {
+			getGson().fromJson(content, JsonObject.class);
+		} catch (Exception e) {
+			try {
+				getGson().fromJson(content, new TypeToken<List<JsonObject>>(){}.getType());
+			} catch (Exception e2) {
+				return false;
+			}
+		}
+		return true;
 	}
 }
