@@ -1,10 +1,18 @@
 package br.com.oktolab.gson;
 
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStreamReader;
+import java.lang.reflect.Type;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.List;
+import java.util.zip.GZIPInputStream;
+import java.util.zip.GZIPOutputStream;
 
 import br.com.oktolab.gson.adapter.GsonDateTypeAdapter;
 import br.com.oktolab.gson.adapter.GsonLocalDateTimeTypeAdapter;
@@ -50,5 +58,46 @@ public class GSON {
 			}
 		}
 		return true;
+	}
+	
+	public static String toJsonGZIP(Object value) throws Exception {
+		String jsonStr = getGson().toJson(value);
+		return compress(jsonStr);
+	}
+	
+	public static <T> T fromJsonGZIP(String json, Class<T> classOfT) throws Exception {
+		String decompressedJson = decompress(json);
+		return getGson().fromJson(decompressedJson, classOfT);
+	}
+	
+	public static <T> T fromJsonGZIP(String json, Type typeOfT) throws Exception {
+		String decompressedJson = decompress(json);
+		return getGson().fromJson(decompressedJson, typeOfT);
+	}
+
+	private static String compress(String str) throws Exception {
+		if (str == null || str.length() == 0) {
+			return "";
+		}
+		ByteArrayOutputStream obj = new ByteArrayOutputStream();
+		GZIPOutputStream gzip = new GZIPOutputStream(obj);
+		gzip.write(str.getBytes(StandardCharsets.ISO_8859_1));
+		gzip.close();
+		return obj.toString(StandardCharsets.ISO_8859_1.name());
+	}
+
+	private static String decompress(String json) throws Exception {
+		byte[] bytes = json.getBytes(StandardCharsets.ISO_8859_1);
+		if (bytes == null || bytes.length == 0) {
+			return "{}";
+		}
+		GZIPInputStream gis = new GZIPInputStream(new ByteArrayInputStream(bytes));
+		BufferedReader bf = new BufferedReader(new InputStreamReader(gis, StandardCharsets.ISO_8859_1));
+		String outStr = "";
+		String line;
+		while ((line = bf.readLine()) != null) {
+			outStr += line;
+		}
+		return outStr;
 	}
 }
