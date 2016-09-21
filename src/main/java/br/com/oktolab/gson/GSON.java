@@ -5,6 +5,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
+import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -14,6 +15,8 @@ import java.util.List;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
+import br.com.oktolab.gson.adapter.GsonByteArrayTypeAdapter;
+import br.com.oktolab.gson.adapter.GsonByteBufferTypeAdapter;
 import br.com.oktolab.gson.adapter.GsonDateTypeAdapter;
 import br.com.oktolab.gson.adapter.GsonLocalDateTimeTypeAdapter;
 import br.com.oktolab.gson.adapter.GsonLocalDateTypeAdapter;
@@ -22,6 +25,7 @@ import br.com.oktolab.gson.adapter.GsonZonedDateTimeTypeAdapter;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 import com.google.gson.reflect.TypeToken;
 
 public class GSON {
@@ -40,6 +44,8 @@ public class GSON {
 							.registerTypeAdapter(LocalDate.class, new GsonLocalDateTypeAdapter())
 							.registerTypeAdapter(LocalDateTime.class, new GsonLocalDateTimeTypeAdapter())
 							.registerTypeAdapter(ZonedDateTime.class, new GsonZonedDateTimeTypeAdapter())
+							.registerTypeAdapter(ByteBuffer.class, new GsonByteBufferTypeAdapter())
+							.registerTypeAdapter(byte[].class, new GsonByteArrayTypeAdapter())
 							.create();
 				}
 			}
@@ -54,7 +60,11 @@ public class GSON {
 			try {
 				getGson().fromJson(content, new TypeToken<List<JsonObject>>(){}.getType());
 			} catch (Exception e2) {
-				return false;
+				try {
+					getGson().fromJson(content, new TypeToken<List<JsonPrimitive>>(){}.getType());
+				} catch (Exception e3) {
+					return false;
+				}
 			}
 		}
 		return true;
