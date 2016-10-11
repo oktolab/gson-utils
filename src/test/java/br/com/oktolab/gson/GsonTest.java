@@ -11,8 +11,9 @@ public class GsonTest {
 		Assert.assertTrue(GSON.isValidJson("[]"));
 		Assert.assertTrue(GSON.isValidJson("{\"foo\":50}"));
 		Assert.assertTrue(GSON.isValidJson("[{\"foo\":50}]"));
+		Assert.assertTrue(GSON.isValidJson("[ok]"));
+		Assert.assertTrue(GSON.isValidJson("[ok, multiple, values]"));
 		Assert.assertFalse(GSON.isValidJson("{error}"));
-		Assert.assertFalse(GSON.isValidJson("[error]"));
 		Assert.assertFalse(GSON.isValidJson("Internal Server Error"));
 	}
 	
