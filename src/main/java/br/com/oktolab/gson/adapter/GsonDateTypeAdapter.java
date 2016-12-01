@@ -15,6 +15,7 @@ public class GsonDateTypeAdapter implements JsonDeserializer<Date> {
 	 
 	private static final String DATE_PATTERN = "yyyy-MM-dd";
 	private static final String DATE_WITH_TIME_PATTERN = "yyyy-MM-dd'T'HH:mm:ssZ";
+	private static final String DATE_PATTERN_UTC = "yyyy-MM-dd'T'HH:mm:ss.SSS";
 	 
 	@Override 
 	public Date deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
@@ -30,7 +31,11 @@ public class GsonDateTypeAdapter implements JsonDeserializer<Date> {
 		DateFormat dateFormat = null;
 	    if (dateString != null && dateString.trim().length() > 0) {
 	    	if (dateString.contains("T")) {
-	    		dateFormat = new SimpleDateFormat(DATE_WITH_TIME_PATTERN);
+	    		if (dateString.endsWith("Z")) {
+	    			dateFormat = new SimpleDateFormat(DATE_PATTERN_UTC);
+	    		} else {
+	    			dateFormat = new SimpleDateFormat(DATE_WITH_TIME_PATTERN);
+	    		}
 	    	} else {
 	    		dateFormat = new SimpleDateFormat(DATE_PATTERN);
 	    	}
