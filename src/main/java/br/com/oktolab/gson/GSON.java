@@ -9,6 +9,7 @@ import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.List;
@@ -20,6 +21,7 @@ import br.com.oktolab.gson.adapter.GsonByteBufferTypeAdapter;
 import br.com.oktolab.gson.adapter.GsonDateTypeAdapter;
 import br.com.oktolab.gson.adapter.GsonLocalDateTimeTypeAdapter;
 import br.com.oktolab.gson.adapter.GsonLocalDateTypeAdapter;
+import br.com.oktolab.gson.adapter.GsonLocalTimeTypeAdapter;
 import br.com.oktolab.gson.adapter.GsonZonedDateTimeTypeAdapter;
 
 import com.google.gson.Gson;
@@ -40,6 +42,7 @@ public class GSON {
 				if (gson == null) {
 					gson = new GsonBuilder()
 							.setDateFormat(DATE_FORMAT)
+							.registerTypeAdapter(LocalTime.class, new GsonLocalTimeTypeAdapter())
 							.registerTypeAdapter(Date.class, new GsonDateTypeAdapter())
 							.registerTypeAdapter(LocalDate.class, new GsonLocalDateTypeAdapter())
 							.registerTypeAdapter(LocalDateTime.class, new GsonLocalDateTimeTypeAdapter())
