@@ -3,9 +3,19 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>br.com.oktolab.gson</groupId>
 	<artifactId>gson-utils</artifactId>
-	<version>1.2.3</version>
+	<version>1.2.4</version>
 
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>${project.build.sourceEncoding}</project.reporting.outputEncoding>
+		<jdk.version>1.8</jdk.version>
+	</properties>
+	
 	<repositories>
+		<repository>
+			<id>central</id>
+			<url>http://repo1.maven.org/maven2/</url>
+		</repository>
 		<repository>
 			<id>maven-s3-okto-release</id>
 			<url>s3://m2-repository-okto/releases</url>
@@ -37,7 +47,19 @@
 				<version>5.0.0.RELEASE</version>
 			</extension>
 		</extensions>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+				<configuration>
+					<source>${jdk.version}</source>
+					<target>${jdk.version}</target>
+				</configuration>
+			</plugin>
+		</plugins>
 	</build>
+	
 	<dependencies>
 		<dependency>
 			<groupId>com.google.code.gson</groupId>

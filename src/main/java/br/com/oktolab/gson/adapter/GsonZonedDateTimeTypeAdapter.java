@@ -31,9 +31,9 @@ public class GsonZonedDateTimeTypeAdapter implements JsonDeserializer<ZonedDateT
 	private ZonedDateTime parseLocalDateTime(final String dateString) throws ParseException {
 	    if (dateString != null && dateString.trim().length() > 0) {
 	    	if (dateString.length() == 19) { // whithout zone
-	    		//dateString = dateString + "-03:00";
 	    		LocalDateTime localDateTime = LocalDateTime.parse(dateString);
 	    		return localDateTime.atZone(ZoneId.of("America/Sao_Paulo"));
+//	    		return localDateTime.atZone(ZoneOffset.UTC);
 	    	} else {
 	    		return ZonedDateTime.parse(dateString, DateTimeFormatter.ISO_ZONED_DATE_TIME);
 	    	}

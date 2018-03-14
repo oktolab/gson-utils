@@ -2,6 +2,7 @@ package br.com.oktolab.gson.adapter;
 
 import java.lang.reflect.Type;
 import java.text.ParseException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -20,27 +21,24 @@ public class GsonLocalDateTimeTypeAdapter implements JsonDeserializer<LocalDateT
 		try { 
 	        String jsonStr = json.getAsJsonPrimitive().getAsString();
 	        return parseLocalDateTime(jsonStr);
-	    } catch (ParseException e) { 
+	    } catch (ParseException e) {
 	        throw new JsonParseException(e.getMessage(), e);
 	    } 
 	}
 	
 	private LocalDateTime parseLocalDateTime(final String dateString) throws ParseException {
-	    if (dateString != null && dateString.trim().length() > 0) {
-//	    	if (dateString.contains("T") && dateString.length() > 19) {
-//	    		return ZonedDateTime.parse(dateString).toLocalDateTime();
-//	    	}
-//    		return LocalDateTime.parse(dateString);
-	    	return LocalDateTime.parse(dateString, DateTimeFormatter.ISO_DATE_TIME);
-	    } else { 
-	        return null; 
-	    } 
+		if (dateString == null || dateString.trim().isEmpty()) {
+			return null;
+		}
+		if (dateString.length() == 10) {
+			return LocalDate.parse(dateString).atStartOfDay();
+		}
+	    return LocalDateTime.parse(dateString, DateTimeFormatter.ISO_DATE_TIME);
 	}
 
 	@Override
 	public JsonElement serialize(final LocalDateTime src, final Type typeOfSrc, final JsonSerializationContext context) {
 		String strDateTime = DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(src);
-//		strDateTime = strDateTime.concat("Z");
 		return new JsonPrimitive(strDateTime);
 	}
 
