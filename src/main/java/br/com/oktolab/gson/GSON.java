@@ -57,20 +57,21 @@ public class GSON {
 	}
 
 	public static boolean isValidJson(String content) {
+		Object parsedValue = null;
 		try {
-			getGson().fromJson(content, JsonObject.class);
+			parsedValue = getGson().fromJson(content, JsonObject.class);
 		} catch (Exception e) {
 			try {
-				getGson().fromJson(content, new TypeToken<List<JsonObject>>(){}.getType());
+				parsedValue = getGson().fromJson(content, new TypeToken<List<JsonObject>>(){}.getType());
 			} catch (Exception e2) {
 				try {
-					getGson().fromJson(content, new TypeToken<List<JsonPrimitive>>(){}.getType());
+					parsedValue = getGson().fromJson(content, new TypeToken<List<JsonPrimitive>>(){}.getType());
 				} catch (Exception e3) {
 					return false;
 				}
 			}
 		}
-		return true;
+		return parsedValue != null;
 	}
 	
 	public static String toJsonGZIP(Object value) throws Exception {
