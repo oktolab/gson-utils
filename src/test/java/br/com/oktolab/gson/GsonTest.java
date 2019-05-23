@@ -25,9 +25,9 @@ public class GsonTest {
 	@Test
 	public void testGZIP() throws Exception {
 		Foo foo = new Foo();
-		foo.name = "Arthur Rocha";
+		foo.name = "Arthur Rocha==";
 		foo.number = 123456789;
-		
+//		GSON.getGson().toJson(foo) = \u003d = disabl,e html Gson gson = new GsonBuilder().disableHtmlEscaping().create()
 		String jsonGZIP = GSON.toJsonGZIP(foo);
 		Foo fromJsonGZIP = GSON.fromJsonGZIP(jsonGZIP, Foo.class);
 		

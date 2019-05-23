@@ -49,6 +49,7 @@ public class GSON {
 							.registerTypeAdapter(ZonedDateTime.class, new GsonZonedDateTimeTypeAdapter())
 							.registerTypeAdapter(ByteBuffer.class, new GsonByteBufferTypeAdapter())
 							.registerTypeAdapter(byte[].class, new GsonByteArrayTypeAdapter())
+							.disableHtmlEscaping()
 							.create();
 				}
 			}
